@@ -15,8 +15,11 @@ func MangaIndex(queryParams models.QueryParams) ([]models.MangaData, error) {
 	c := colly.NewCollector()
 	c.OnHTML(".page-item-detail.manga", func(e *colly.HTMLElement) {
 
+		tempDataCover := strings.Split(e.ChildAttr("a > img", "data-srcset"), " ")
+
 		dataMangas = append(dataMangas, models.MangaData{
-			Cover:       e.ChildAttr("a > img", "data-src"),
+
+			Cover:       tempDataCover[len(tempDataCover)-2],
 			Title:       e.ChildAttr("a", "title"),
 			LastChapter: strings.Split(e.ChildText("span.chapter.font-meta > a"), " ")[1],
 			Id:          strings.Split(e.ChildAttr("a", "href"), "/")[4],
