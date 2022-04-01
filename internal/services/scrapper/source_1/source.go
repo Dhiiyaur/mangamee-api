@@ -77,7 +77,7 @@ func MangaDetail(queryParams models.QueryParams) (models.MangaData, error) {
 	return dataMangas, nil
 }
 
-func MangaChapter(queryParams models.QueryParams) (models.MangaData, error) {
+func MangaImage(queryParams models.QueryParams) (models.MangaData, error) {
 
 	var dataMangas models.MangaData
 	var dataImages []models.Image
@@ -99,4 +99,29 @@ func MangaChapter(queryParams models.QueryParams) (models.MangaData, error) {
 	}
 	return dataMangas, nil
 
+}
+
+func MangaChapter(queryParams models.QueryParams) (models.MangaData, error) {
+
+	var dataMangas models.MangaData
+	var chapters []models.Chapter
+	c := colly.NewCollector()
+
+	c.OnHTML(".wp-manga-chapter", func(e *colly.HTMLElement) {
+
+		chapters = append(chapters, models.Chapter{
+			Name: e.ChildText("a"),
+			Id:   strings.Split(e.ChildAttr("a", "href"), "/")[5],
+		})
+	})
+
+	err := c.Visit("https://www.mangaread.org/manga/" + queryParams.Id)
+
+	dataMangas.Chapters = chapters
+
+	if err != nil {
+		return dataMangas, err
+	}
+
+	return dataMangas, nil
 }
