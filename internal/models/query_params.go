@@ -5,4 +5,5 @@ type QueryParams struct {
 	Page      string
 	Id        string
 	ChapterId string
+	Search    string
 }

@@ -21,6 +21,7 @@ func RouterApp(e *echo.Echo) {
 	m.GET("/detail/:source/:id", controller.GetMangaDetail)
 	m.GET("/read/:source/:id/:chapter_id", controller.GetMangaImage)
 	m.GET("/read-chapter/:source/:id", controller.GetMangaChapther)
+	m.GET("/search/:source", controller.GetMangaSearch)
 
 	// auth
 

@@ -34,6 +34,30 @@ func MangaIndex(queryParams models.QueryParams) ([]models.MangaData, error) {
 	return dataMangas, nil
 }
 
+func MangaSearch(queryParams models.QueryParams) ([]models.MangaData, error) {
+
+	var dataMangas []models.MangaData
+
+	c := colly.NewCollector()
+	c.OnHTML(".row.c-tabs-item__content", func(e *colly.HTMLElement) {
+
+		dataMangas = append(dataMangas, models.MangaData{
+			Cover:       e.ChildText("span.font-meta.chapter > a"),
+			Title:       e.ChildAttr("a", "title"),
+			LastChapter: e.ChildText("span.font-meta.chapter > a"),
+			Id:          strings.Split(e.ChildAttr("a", "href"), "/")[4],
+		})
+
+	})
+
+	err := c.Visit("https://www.mangaread.org/?s=" + queryParams.Search + "&post_type=wp-manga")
+	if err != nil {
+		return dataMangas, err
+	}
+
+	return dataMangas, nil
+}
+
 func MangaDetail(queryParams models.QueryParams) (models.MangaData, error) {
 
 	var dataMangas models.MangaData

@@ -1,34 +1,31 @@
 package source_2
 
 import (
+	"mangamee-api/internal/models"
 	"strings"
 
-	"github.com/dhiiyaur/go-mangamee-2/internal/models"
 	"github.com/gocolly/colly"
 )
 
-func MangaIndex(queryParams models.QueryParams) ([]models.MangaData, error) {
+func MangaSearch(queryParams models.QueryParams) ([]models.MangaData, error) {
 
-	dataMangas := []models.MangaData{}
+	var dataMangas []models.MangaData
 
 	c := colly.NewCollector()
-	c.OnHTML(".page-item-detail.manga", func(e *colly.HTMLElement) {
+	c.OnHTML(".manga_pic_list > li", func(e *colly.HTMLElement) {
 
-		result := models.MangaData{
-			Cover:       e.ChildAttr("a > img", "data-src"),
-			Title:       e.ChildAttr("a", "title"),
-			LastChapter: strings.Split(e.ChildText("span.chapter.font-meta > a"), " ")[1],
-			Link:        strings.Split(e.ChildAttr("a", "href"), "/")[4],
-		}
+		dataMangas = append(dataMangas, models.MangaData{
+			Cover: e.ChildAttr("a.manga_cover > img", "src"),
+			Title: e.ChildAttr("a.manga_cover", "title"),
+			Id:    strings.Split(e.ChildAttr("a.manga_cover", "href"), "/")[2],
+		})
 
-		dataMangas = append(dataMangas, result)
 	})
 
-	err := c.Visit("https://www.mangaread.org/manga/?m_orderby=new-manga&page=" + queryParams.SourcePage)
+	err := c.Visit("https://www.mangatown.com/search?name=" + queryParams.Search)
 	if err != nil {
 		return dataMangas, err
 	}
 
 	return dataMangas, nil
-
 }
