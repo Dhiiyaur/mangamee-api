@@ -47,10 +47,19 @@ func MangaSearch(queryParams models.QueryParams) ([]models.MangaData, error) {
 	c := colly.NewCollector()
 	c.OnHTML(".row.c-tabs-item__content", func(e *colly.HTMLElement) {
 
+		var lastChapter string
+		checkChapter := strings.Split(e.ChildText("span.font-meta.chapter > a"), " ")
+
+		if len(checkChapter) > 2 {
+			lastChapter = checkChapter[len(checkChapter)-2]
+		} else {
+			lastChapter = checkChapter[len(checkChapter)-1]
+		}
+
 		dataMangas = append(dataMangas, models.MangaData{
-			Cover:       e.ChildText("span.font-meta.chapter > a"),
+			Cover:       e.ChildAttr("a > img", "data-src"),
 			Title:       e.ChildAttr("a", "title"),
-			LastChapter: e.ChildText("span.font-meta.chapter > a"),
+			LastChapter: lastChapter,
 			Id:          strings.Split(e.ChildAttr("a", "href"), "/")[4],
 		})
 
