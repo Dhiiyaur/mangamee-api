@@ -6,6 +6,7 @@ import (
 	"mangamee-api/internal/models"
 	"mangamee-api/internal/services/scrapper/source_1"
 	"mangamee-api/internal/services/scrapper/source_2"
+	"mangamee-api/internal/services/scrapper/source_3"
 
 	"github.com/labstack/echo/v4"
 )
@@ -28,6 +29,13 @@ func GetMangaIndex(c echo.Context) error {
 
 	case "2":
 		mangaData, err := source_2.MangaIndex(queryParams)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, err)
+		}
+		return c.JSON(http.StatusOK, mangaData)
+
+	case "3":
+		mangaData, err := source_3.MangaIndex(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
