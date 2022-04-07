@@ -4,6 +4,7 @@ import (
 	"mangamee-api/internal/models"
 	"mangamee-api/internal/services/scrapper/source_1"
 	"mangamee-api/internal/services/scrapper/source_2"
+	"mangamee-api/internal/services/scrapper/source_3"
 	"net/http"
 	"strings"
 
@@ -33,6 +34,15 @@ func GetMangaSearch(c echo.Context) error {
 			return c.JSON(http.StatusBadRequest, err)
 		}
 		return c.JSON(http.StatusOK, mangaData)
+
+	case "3":
+
+		mangaData, err := source_3.MangaSearch(queryParams)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, err)
+		}
+		return c.JSON(http.StatusOK, mangaData)
+
 	}
 
 	return c.JSON(http.StatusBadRequest, "bad request")
