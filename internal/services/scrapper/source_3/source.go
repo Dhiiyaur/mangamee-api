@@ -190,3 +190,28 @@ func MangaChapter(queryParams models.QueryParams) (models.MangaData, error) {
 
 	return dataMangas, nil
 }
+
+func MangaMetaTag(queryParams models.QueryParams) (models.MangaData, error) {
+
+	var dataMangas models.MangaData
+
+	c := colly.NewCollector()
+
+	c.OnHTML(".series-thumb", func(e *colly.HTMLElement) {
+		dataMangas.Cover = e.ChildAttr(`img`, "src")
+	})
+
+	c.OnHTML(".series-title", func(e *colly.HTMLElement) {
+
+		dataMangas.Title = e.ChildText(`h2`)
+	})
+
+	err := c.Visit("https://www.maid.my.id/manga/" + queryParams.Id + "/")
+
+	if err != nil {
+		return dataMangas, err
+	}
+
+	return dataMangas, nil
+
+}
