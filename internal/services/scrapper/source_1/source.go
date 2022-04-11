@@ -164,3 +164,30 @@ func MangaChapter(queryParams models.QueryParams) (models.MangaData, error) {
 
 	return dataMangas, nil
 }
+
+func MangaMetaTag(queryParams models.QueryParams) (models.MangaData, error) {
+
+	var dataMangas models.MangaData
+	limit := 0
+
+	c := colly.NewCollector()
+
+	c.OnHTML(".post-title", func(e *colly.HTMLElement) {
+
+		if limit == 0 {
+			dataMangas.Title = strings.Split(e.ChildText("h1"), "  ")[0]
+		}
+		limit++
+	})
+
+	c.OnHTML(".summary_image", func(e *colly.HTMLElement) {
+		dataMangas.Cover = e.ChildAttr("img", "data-src")
+	})
+
+	err := c.Visit("https://www.mangaread.org/manga/" + queryParams.Id)
+
+	if err != nil {
+		return dataMangas, err
+	}
+	return dataMangas, nil
+}

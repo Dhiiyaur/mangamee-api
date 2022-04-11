@@ -216,3 +216,25 @@ func MangaChapter(queryParams models.QueryParams) (models.MangaData, error) {
 	return dataMangas, nil
 
 }
+
+func MangaMetaTag(queryParams models.QueryParams) (models.MangaData, error) {
+
+	var dataMangas models.MangaData
+
+	c := colly.NewCollector()
+
+	c.OnHTML(".article_content", func(e *colly.HTMLElement) {
+
+		dataMangas.Title = e.ChildText("h1.title-top")
+		dataMangas.Cover = e.ChildAttr("div.detail_info.clearfix > img", "src")
+
+	})
+
+	err := c.Visit("https://www.mangatown.com/manga/" + queryParams.Id)
+
+	if err != nil {
+		return dataMangas, err
+	}
+
+	return dataMangas, nil
+}
