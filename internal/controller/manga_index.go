@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"mangamee-api/internal/db"
 	"mangamee-api/internal/models"
 	"mangamee-api/internal/services/scrapper/source_1"
 	"mangamee-api/internal/services/scrapper/source_2"
@@ -21,6 +22,7 @@ func GetMangaIndex(c echo.Context) error {
 	switch queryParams.Source {
 	case "1":
 
+		db.InsertDataUserLog("index", "1", "-", "-", c.RealIP())
 		mangaData, err := source_1.MangaIndex(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
@@ -28,6 +30,8 @@ func GetMangaIndex(c echo.Context) error {
 		return c.JSON(http.StatusOK, mangaData)
 
 	case "2":
+
+		db.InsertDataUserLog("index", "2", "-", "-", c.RealIP())
 		mangaData, err := source_2.MangaIndex(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
@@ -35,6 +39,8 @@ func GetMangaIndex(c echo.Context) error {
 		return c.JSON(http.StatusOK, mangaData)
 
 	case "3":
+
+		db.InsertDataUserLog("index", "3", "-", "-", c.RealIP())
 		mangaData, err := source_3.MangaIndex(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
