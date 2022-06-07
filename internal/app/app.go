@@ -1,9 +1,8 @@
 package app
 
 import (
-	"os"
-
 	"github.com/labstack/echo/v4"
+	"github.com/spf13/viper"
 )
 
 func Start() {
@@ -11,6 +10,5 @@ func Start() {
 	e := echo.New()
 	MiddlewareSetup(e)
 	RouterApp(e)
-
-	e.Start(":" + os.Getenv("PORT"))
+	e.Start(":" + viper.GetString("PORT"))
 }
