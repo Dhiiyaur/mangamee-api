@@ -22,7 +22,7 @@ func GetMangaSearch(c echo.Context) error {
 	switch queryParams.Source {
 	case "1":
 
-		db.InsertDataUserLog("search", "1", queryParams.Search, "-", c.RealIP())
+		db.InsertDataUserLog("search", 1, queryParams.Search, "-")
 		mangaData, err := source_1.MangaSearch(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
@@ -31,7 +31,7 @@ func GetMangaSearch(c echo.Context) error {
 
 	case "2":
 
-		db.InsertDataUserLog("search", "2", queryParams.Search, "-", c.RealIP())
+		db.InsertDataUserLog("search", 2, queryParams.Search, "-")
 		mangaData, err := source_2.MangaSearch(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
@@ -40,7 +40,7 @@ func GetMangaSearch(c echo.Context) error {
 
 	case "3":
 
-		db.InsertDataUserLog("search", "3", queryParams.Search, "-", c.RealIP())
+		db.InsertDataUserLog("search", 3, queryParams.Search, "-")
 		mangaData, err := source_3.MangaSearch(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
