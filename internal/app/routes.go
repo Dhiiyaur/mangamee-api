@@ -24,12 +24,5 @@ func RouterApp(e *echo.Echo) {
 	m.GET("/search/:source", controller.GetMangaSearch)
 	m.GET("/meta/:source/:id", controller.GetMangaMetaTag)
 	m.GET("/source", controller.GetMangaSource)
-
-	// auth
-
-	// e.GET("/editorpick", controller.EditorPick)
-	// e.GET("/browse", controller.Browse)
-	// e.GET("/search", controller.Search)
-
-	// e.GET("analytics/all", controller.GetCountApiHit)
+	m.GET("/proxy/:source", controller.GetMangaProxy)
 }

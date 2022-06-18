@@ -8,6 +8,7 @@ import (
 	"mangamee-api/internal/services/scrapper/source_1"
 	"mangamee-api/internal/services/scrapper/source_2"
 	"mangamee-api/internal/services/scrapper/source_3"
+	"mangamee-api/internal/services/scrapper/source_4"
 
 	"github.com/labstack/echo/v4"
 )
@@ -43,6 +44,15 @@ func GetMangaImage(c echo.Context) error {
 
 		db.InsertDataUserLog("read", 3, queryParams.Id, queryParams.ChapterId)
 		mangaData, err := source_3.MangaImage(queryParams)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, err)
+		}
+		return c.JSON(http.StatusOK, mangaData)
+
+	case "4":
+
+		db.InsertDataUserLog("read", 4, queryParams.Id, queryParams.ChapterId)
+		mangaData, err := source_4.MangaImage(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
@@ -85,6 +95,13 @@ func GetMangaChapther(c echo.Context) error {
 		}
 		return c.JSON(http.StatusOK, mangaData)
 
+	case "4":
+
+		mangaData, err := source_4.MangaChapter(queryParams)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, err)
+		}
+		return c.JSON(http.StatusOK, mangaData)
 	}
 
 	return c.JSON(http.StatusBadRequest, "bad request")

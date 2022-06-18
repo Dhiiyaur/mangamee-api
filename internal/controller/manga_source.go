@@ -22,6 +22,10 @@ func GetMangaSource(c echo.Context) error {
 			Name: "Maidmy",
 			Id:   3,
 		},
+		{
+			Name: "Mangabat",
+			Id:   4,
+		},
 	}
 
 	return c.JSON(http.StatusOK, MangaSource)
