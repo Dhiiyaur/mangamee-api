@@ -57,10 +57,12 @@ func MangaIndex(queryParams models.QueryParams) ([]models.MangaData, error) {
 		lastChapterCheck := strings.Split(e.ChildText("p.new_chapter"), " ")
 		lastChapter = lastChapterCheck[len(lastChapterCheck)-1]
 
+		mangaCoverCheck := strings.Replace(e.ChildAttr("a > img", "src"), "https://fmcdn.mangahere.com/", "http://fmcdn.mangatown.com/", -1)
+
 		dataMangas = append(dataMangas, models.MangaData{
 			Id:          mangaId,
 			Title:       e.ChildAttr("a", "title"),
-			Cover:       e.ChildAttr("a > img", "src"),
+			Cover:       mangaCoverCheck,
 			LastChapter: lastChapter,
 		})
 
@@ -81,8 +83,10 @@ func MangaSearch(queryParams models.QueryParams) ([]models.MangaData, error) {
 	c := colly.NewCollector()
 	c.OnHTML(".manga_pic_list > li", func(e *colly.HTMLElement) {
 
+		mangaCoverCheck := strings.Replace(e.ChildAttr("a.manga_cover > img", "src"), "https://fmcdn.mangahere.com/", "http://fmcdn.mangatown.com/", -1)
+
 		dataMangas = append(dataMangas, models.MangaData{
-			Cover: e.ChildAttr("a.manga_cover > img", "src"),
+			Cover: mangaCoverCheck,
 			Title: e.ChildAttr("a.manga_cover", "title"),
 			Id:    strings.Split(e.ChildAttr("a.manga_cover", "href"), "/")[2],
 		})
@@ -106,8 +110,10 @@ func MangaDetail(queryParams models.QueryParams) (models.MangaData, error) {
 
 	c.OnHTML(".article_content", func(e *colly.HTMLElement) {
 
+		mangaCoverCheck := strings.Replace(e.ChildAttr("div.detail_info.clearfix > img", "src"), "https://fmcdn.mangahere.com/", "http://fmcdn.mangatown.com/", -1)
+
 		dataMangas.Title = e.ChildText("h1.title-top")
-		dataMangas.Cover = e.ChildAttr("div.detail_info.clearfix > img", "src")
+		dataMangas.Cover = mangaCoverCheck
 		dataMangas.Summary = e.ChildText("div.detail_info.clearfix > ul > li > span")
 
 	})
@@ -140,7 +146,11 @@ func MangaImage(queryParams models.QueryParams) (models.MangaData, error) {
 	c := colly.NewCollector()
 
 	c.OnHTML(".read_img", func(e *colly.HTMLElement) {
-		link = "https:" + e.ChildAttr("img", "src")
+
+		mangaCoverCheck := strings.Replace(e.ChildAttr("img", "src"), "zjcdn.mangahere.org", "fmcdn.mangatown.com", -1)
+
+		link = "https:" + mangaCoverCheck
+
 	})
 
 	err := c.Visit("https://www.mangatown.com/manga/" + queryParams.Id + "/" + queryParams.ChapterId + "/")
@@ -225,8 +235,10 @@ func MangaMetaTag(queryParams models.QueryParams) (models.MangaData, error) {
 
 	c.OnHTML(".article_content", func(e *colly.HTMLElement) {
 
+		mangaCoverCheck := strings.Replace(e.ChildAttr("div.detail_info.clearfix > img", "src"), "https://fmcdn.mangahere.com/", "http://fmcdn.mangatown.com/", -1)
+
 		dataMangas.Title = e.ChildText("h1.title-top")
-		dataMangas.Cover = e.ChildAttr("div.detail_info.clearfix > img", "src")
+		dataMangas.Cover = mangaCoverCheck
 
 	})
 
