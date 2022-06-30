@@ -5,6 +5,7 @@ go 1.17
 
 require (
 	github.com/go-playground/validator/v10 v10.9.0
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gocolly/colly v1.2.0
 	github.com/labstack/echo/v4 v4.6.1
 	github.com/lib/pq v1.10.5
@@ -17,6 +18,8 @@ require (
 	github.com/antchfx/htmlquery v1.2.4 // indirect
 	github.com/antchfx/xmlquery v1.3.7 // indirect
 	github.com/antchfx/xpath v1.2.0 // indirect
+	github.com/cespare/xxhash/v2 v2.1.2 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect

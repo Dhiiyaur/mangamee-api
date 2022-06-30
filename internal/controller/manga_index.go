@@ -20,42 +20,54 @@ func GetMangaIndex(c echo.Context) error {
 		Page:   c.Param("page"),
 	}
 
+	MangaData := models.ReturnData{}
+
+	cache, err := db.CacheChecking("index", queryParams)
+	if err == nil {
+		return c.JSON(http.StatusOK, cache.Datas)
+	}
+
 	switch queryParams.Source {
 	case "1":
 
 		db.InsertDataUserLog("index", 1, "-", "-")
-		mangaData, err := source_1.MangaIndex(queryParams)
+		MangaData.Datas, err = source_1.MangaIndex(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+
+		db.SetCache("index", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Datas)
 
 	case "2":
 
 		db.InsertDataUserLog("index", 2, "-", "-")
-		mangaData, err := source_2.MangaIndex(queryParams)
+		MangaData.Datas, err = source_2.MangaIndex(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		db.SetCache("index", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Datas)
 
 	case "3":
 
 		db.InsertDataUserLog("index", 3, "-", "-")
-		mangaData, err := source_3.MangaIndex(queryParams)
+		MangaData.Datas, err = source_3.MangaIndex(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		db.SetCache("index", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Datas)
 
 	case "4":
 
 		db.InsertDataUserLog("index", 4, "-", "-")
-		mangaData, err := source_4.MangaIndex(queryParams)
+		MangaData.Datas, err = source_4.MangaIndex(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		db.SetCache("index", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Datas)
 
 	}
 
