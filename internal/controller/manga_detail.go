@@ -20,42 +20,54 @@ func GetMangaDetail(c echo.Context) error {
 		Id:     c.Param("id"),
 	}
 
+	MangaData := models.ReturnData{}
+
+	cache, err := db.CacheChecking("detail", queryParams)
+	if err == nil {
+		return c.JSON(http.StatusOK, cache.Data)
+	}
+
 	switch queryParams.Source {
 	case "1":
 
 		db.InsertDataUserLog("detail", 1, queryParams.Id, "-")
-		mangaData, err := source_1.MangaDetail(queryParams)
+		MangaData.Data, err = source_1.MangaDetail(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+
+		db.SetCache("detail", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Data)
 
 	case "2":
 
 		db.InsertDataUserLog("detail", 2, queryParams.Id, "-")
-		mangaData, err := source_2.MangaDetail(queryParams)
+		MangaData.Data, err = source_2.MangaDetail(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		db.SetCache("detail", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Data)
 
 	case "3":
 
 		db.InsertDataUserLog("detail", 3, queryParams.Id, "-")
-		mangaData, err := source_3.MangaDetail(queryParams)
+		MangaData.Data, err = source_3.MangaDetail(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		db.SetCache("detail", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Data)
 
 	case "4":
 
 		db.InsertDataUserLog("detail", 4, queryParams.Id, "-")
-		mangaData, err := source_4.MangaDetail(queryParams)
+		MangaData.Data, err = source_4.MangaDetail(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		db.SetCache("detail", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Data)
 
 	}
 
@@ -63,43 +75,47 @@ func GetMangaDetail(c echo.Context) error {
 }
 
 func GetMangaMetaTag(c echo.Context) error {
+
 	queryParams := models.QueryParams{
 		Source: c.Param("source"),
 		Id:     c.Param("id"),
 	}
 
+	MangaData := models.ReturnData{}
+	var err error
+
 	switch queryParams.Source {
 	case "1":
 
-		mangaData, err := source_1.MangaMetaTag(queryParams)
+		MangaData.Data, err = source_1.MangaMetaTag(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		return c.JSON(http.StatusOK, MangaData.Data)
 
 	case "2":
 
-		mangaData, err := source_2.MangaMetaTag(queryParams)
+		MangaData.Data, err = source_2.MangaMetaTag(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		return c.JSON(http.StatusOK, MangaData.Data)
 
 	case "3":
 
-		mangaData, err := source_3.MangaMetaTag(queryParams)
+		MangaData.Data, err = source_3.MangaMetaTag(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		return c.JSON(http.StatusOK, MangaData.Data)
 
 	case "4":
 
-		mangaData, err := source_4.MangaMetaTag(queryParams)
+		MangaData.Data, err = source_4.MangaMetaTag(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		return c.JSON(http.StatusOK, MangaData.Data)
 
 	}
 

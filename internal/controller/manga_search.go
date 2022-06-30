@@ -20,42 +20,52 @@ func GetMangaSearch(c echo.Context) error {
 		Search: strings.Replace(c.QueryParam("title"), " ", "%20", -1),
 	}
 
+	MangaData := models.ReturnData{}
+	cache, err := db.CacheChecking("search", queryParams)
+	if err == nil {
+		return c.JSON(http.StatusOK, cache.Datas)
+	}
+
 	switch queryParams.Source {
 	case "1":
 
 		db.InsertDataUserLog("search", 1, queryParams.Search, "-")
-		mangaData, err := source_1.MangaSearch(queryParams)
+		MangaData.Datas, err = source_1.MangaSearch(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		db.SetCache("search", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Datas)
 
 	case "2":
 
 		db.InsertDataUserLog("search", 2, queryParams.Search, "-")
-		mangaData, err := source_2.MangaSearch(queryParams)
+		MangaData.Datas, err = source_2.MangaSearch(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		db.SetCache("search", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Datas)
 
 	case "3":
 
 		db.InsertDataUserLog("search", 3, queryParams.Search, "-")
-		mangaData, err := source_3.MangaSearch(queryParams)
+		MangaData.Datas, err = source_3.MangaSearch(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		db.SetCache("search", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Datas)
 
 	case "4":
 
 		db.InsertDataUserLog("search", 4, queryParams.Search, "-")
-		mangaData, err := source_4.MangaSearch(queryParams)
+		MangaData.Datas, err = source_4.MangaSearch(queryParams)
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		return c.JSON(http.StatusOK, mangaData)
+		db.SetCache("search", queryParams, MangaData)
+		return c.JSON(http.StatusOK, MangaData.Datas)
 
 	}
 	return c.JSON(http.StatusBadRequest, "bad request")

@@ -20,3 +20,8 @@ type Chapter struct {
 type Image struct {
 	Image string `json:"Image"`
 }
+
+type ReturnData struct {
+	Data  MangaData
+	Datas []MangaData
+}
