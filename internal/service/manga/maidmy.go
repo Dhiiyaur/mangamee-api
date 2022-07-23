@@ -1,16 +1,17 @@
-package source_3
+package mangaservice
 
 import (
 	"fmt"
-	"mangamee-api/internal/models"
+	"mangamee-api/internal/entity"
+	"regexp"
 	"strings"
 
 	"github.com/gocolly/colly"
 )
 
-func MangaIndex(queryParams models.QueryParams) ([]models.MangaData, error) {
+func MaidmyIndex(params entity.MangaParams) ([]entity.MangaData, error) {
 
-	var dataMangas []models.MangaData
+	var returnData []entity.MangaData
 
 	c := colly.NewCollector()
 
@@ -24,7 +25,7 @@ func MangaIndex(queryParams models.QueryParams) ([]models.MangaData, error) {
 		} else {
 			checkLastChapter = tempLastChapter
 		}
-		dataMangas = append(dataMangas, models.MangaData{
+		returnData = append(returnData, entity.MangaData{
 			Title:       e.ChildAttr("a", "title"),
 			Id:          strings.Split(e.ChildAttr("a", "href"), "/")[4],
 			Cover:       e.ChildAttr("img", "src"),
@@ -32,17 +33,17 @@ func MangaIndex(queryParams models.QueryParams) ([]models.MangaData, error) {
 		})
 	})
 
-	err := c.Visit("https://www.maid.my.id/page/" + queryParams.Page + "/")
+	err := c.Visit("https://www.maid.my.id/page/" + params.PageNumber + "/")
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
 
-	return dataMangas, nil
+	return returnData, nil
 }
 
-func MangaSearch(queryParams models.QueryParams) ([]models.MangaData, error) {
+func MaidmySearch(params entity.MangaParams) ([]entity.MangaData, error) {
 
-	var dataMangas []models.MangaData
+	var returnData []entity.MangaData
 
 	c := colly.NewCollector()
 
@@ -56,7 +57,7 @@ func MangaSearch(queryParams models.QueryParams) ([]models.MangaData, error) {
 			checkLastChapter = tempLastChapter[1]
 		}
 
-		dataMangas = append(dataMangas, models.MangaData{
+		returnData = append(returnData, entity.MangaData{
 			Title:       e.ChildAttr("a", "title"),
 			Id:          strings.Split(e.ChildAttr("a", "href"), "/")[4],
 			Cover:       e.ChildAttr("img", "src"),
@@ -64,34 +65,34 @@ func MangaSearch(queryParams models.QueryParams) ([]models.MangaData, error) {
 		})
 	})
 
-	err := c.Visit("https://www.maid.my.id/?s=" + queryParams.Search)
+	err := c.Visit("https://www.maid.my.id/?s=" + params.Search)
 
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
 
-	return dataMangas, nil
+	return returnData, nil
 }
 
-func MangaDetail(queryParams models.QueryParams) (models.MangaData, error) {
+func MaidmyDetail(params entity.MangaParams) (entity.MangaData, error) {
 
-	var dataMangas models.MangaData
-	var chapters []models.Chapter
+	var returnData entity.MangaData
+	var chapters []entity.Chapter
 
 	c := colly.NewCollector()
 
 	c.OnHTML(".series-thumb", func(e *colly.HTMLElement) {
-		dataMangas.Cover = e.ChildAttr(`img`, "src")
+		returnData.Cover = e.ChildAttr(`img`, "src")
 	})
 
 	c.OnHTML(".series-title", func(e *colly.HTMLElement) {
 
-		dataMangas.Title = e.ChildText(`h2`)
+		returnData.Title = e.ChildText(`h2`)
 	})
 
 	c.OnHTML(".series-synops", func(e *colly.HTMLElement) {
 
-		dataMangas.Summary = e.Text
+		returnData.Summary = e.Text
 
 	})
 
@@ -110,108 +111,95 @@ func MangaDetail(queryParams models.QueryParams) (models.MangaData, error) {
 			chapterName = fmt.Sprintf("%v %v", a[len(a)-2], a[len(a)-1])
 		}
 
-		chapters = append(chapters, models.Chapter{
+		chapters = append(chapters, entity.Chapter{
 			Name: chapterName,
 			Id:   strings.Split(e.ChildAttr(`a`, "href"), "/")[3],
 		})
 
 	})
 
-	err := c.Visit("https://www.maid.my.id/manga/" + queryParams.Id + "/")
+	err := c.Visit("https://www.maid.my.id/manga/" + params.MangaId + "/")
 
-	dataMangas.Chapters = chapters
+	returnData.Chapters = chapters
 
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
 
-	return dataMangas, nil
+	return returnData, nil
 }
 
-func MangaImage(queryParams models.QueryParams) (models.MangaData, error) {
+func MaidmyImage(params entity.MangaParams) (entity.MangaData, error) {
 
-	var dataMangas models.MangaData
-	var dataImages []models.Image
+	var returnData entity.MangaData
+	var dataImages []entity.Image
 	c := colly.NewCollector()
 
 	c.OnHTML(".reader-area img", func(e *colly.HTMLElement) {
 
-		dataImages = append(dataImages, models.Image{
+		dataImages = append(dataImages, entity.Image{
 			Image: e.Attr("src"),
 		})
 
 	})
 
-	err := c.Visit("https://www.maid.my.id/" + queryParams.ChapterId + "/")
-	dataMangas.Images = dataImages
+	err := c.Visit("https://www.maid.my.id/" + params.ChapterId + "/")
+	returnData.Images = dataImages
 
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
-	return dataMangas, nil
+	return returnData, nil
 }
 
-func MangaChapter(queryParams models.QueryParams) (models.MangaData, error) {
+func MaidmyChapter(params entity.MangaParams) (entity.MangaData, error) {
 
-	var dataMangas models.MangaData
-	var chapters []models.Chapter
+	var returnData entity.MangaData
+	var chapters []entity.Chapter
 
 	c := colly.NewCollector()
 
 	c.OnHTML(".flexch-infoz", func(e *colly.HTMLElement) {
 
-		var chapterName string
-		tempChapterName := e.ChildAttr(`a`, "title")
-
-		if strings.Contains(tempChapterName, "Bahasa Indonesia") {
-			a := strings.Split(tempChapterName, "Bahasa Indonesia")
-			b := strings.Split(a[len(a)-2], " ")
-			chapterName = fmt.Sprintf("%v %v", b[len(b)-3], b[len(b)-2])
-
-		} else {
-			a := strings.Split(tempChapterName, " ")
-			chapterName = fmt.Sprintf("%v %v", a[len(a)-2], a[len(a)-1])
-		}
-
-		chapters = append(chapters, models.Chapter{
-			Name: chapterName,
+		re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
+		tempName := strings.ReplaceAll(re.FindAllString(e.ChildAttr(`a`, "title"), -1)[0], "-", "")
+		chapters = append(chapters, entity.Chapter{
+			Name: tempName,
 			Id:   strings.Split(e.ChildAttr(`a`, "href"), "/")[3],
 		})
 
 	})
 
-	err := c.Visit("https://www.maid.my.id/manga/" + queryParams.Id + "/")
+	err := c.Visit("https://www.maid.my.id/manga/" + params.MangaId + "/")
 
-	dataMangas.Chapters = chapters
+	returnData.Chapters = chapters
 
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
-
-	return dataMangas, nil
+	return returnData, nil
 }
 
-func MangaMetaTag(queryParams models.QueryParams) (models.MangaData, error) {
+func MaidmyMetaTag(params entity.MangaParams) (entity.MangaData, error) {
 
-	var dataMangas models.MangaData
+	var returnData entity.MangaData
 
 	c := colly.NewCollector()
 
 	c.OnHTML(".series-thumb", func(e *colly.HTMLElement) {
-		dataMangas.Cover = e.ChildAttr(`img`, "src")
+		returnData.Cover = e.ChildAttr(`img`, "src")
 	})
 
 	c.OnHTML(".series-title", func(e *colly.HTMLElement) {
 
-		dataMangas.Title = e.ChildText(`h2`)
+		returnData.Title = e.ChildText(`h2`)
 	})
 
-	err := c.Visit("https://www.maid.my.id/manga/" + queryParams.Id + "/")
+	err := c.Visit("https://www.maid.my.id/manga/" + params.MangaId + "/")
 
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
 
-	return dataMangas, nil
-
+	return returnData, nil
 }

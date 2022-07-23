@@ -1,0 +1,139 @@
+{"level":"info","ts":1658043908.93077,"msg":"env ready"}
+{"level":"info","ts":1658043994.952615,"msg":"env ready"}
+{"level":"info","ts":1658044009.398101,"msg":"env ready"}
+{"level":"info","ts":1658044976.447375,"msg":"env ready"}
+{"level":"info","ts":1658045022.196064,"msg":"env ready"}
+{"level":"info","ts":1658045146.098496,"msg":"env ready"}
+{"level":"info","ts":1658045189.316093,"msg":"env ready"}
+{"level":"info","ts":1658045252.519639,"msg":"env ready"}
+{"level":"info","ts":1658045338.0514162,"msg":"env ready"}
+{"level":"info","ts":1658045555.8958888,"msg":"env ready"}
+{"level":"info","ts":1658045555.897108,"msg":"server start"}
+{"level":"info","ts":"2022-07-17T15:14:48.602+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-17T15:14:48.603+0700","msg":"server start"}
+{"level":"info","ts":"2022-07-19T11:15:07.367+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-19T11:15:07.368+0700","msg":"server start"}
+{"level":"error","ts":"2022-07-19T21:21:03.524+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-19T21:21:03.903+0700","msg":"bad request"}
+{"level":"info","ts":"2022-07-20T11:21:47.168+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-20T11:21:47.169+0700","msg":"server start"}
+{"level":"error","ts":"2022-07-20T13:40:41.185+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T13:41:16.161+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T13:41:30.568+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T13:42:00.000+0700","msg":"bad request"}
+{"level":"info","ts":"2022-07-20T13:44:27.941+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-20T13:44:27.942+0700","msg":"server start"}
+{"level":"error","ts":"2022-07-20T13:45:06.214+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:04:04.224+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:05:20.053+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:05:20.112+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:05:21.056+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:05:21.255+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:05:21.275+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:06:19.600+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:06:19.835+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:06:25.847+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:06:46.352+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:19:55.554+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:22:21.313+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:22:27.158+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T17:22:29.953+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T20:44:39.025+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T20:44:39.384+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T20:44:51.309+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T20:44:51.400+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-20T20:45:44.680+0700","msg":"Get \"https://www.mangaread.org/manga/kanan-sama-wa-akumade-choroi/\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-20T20:45:55.010+0700","msg":"Get \"https://www.mangaread.org/manga/kanan-sama-wa-akumade-choroi/\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"info","ts":"2022-07-21T14:03:29.986+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-21T14:03:29.987+0700","msg":"server start"}
+{"level":"info","ts":"2022-07-21T14:07:04.924+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-21T14:07:04.924+0700","msg":"server start"}
+{"level":"info","ts":"2022-07-21T14:13:26.772+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-21T14:13:26.773+0700","msg":"server start"}
+{"level":"info","ts":"2022-07-21T14:18:57.520+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-21T14:18:57.522+0700","msg":"server start"}
+{"level":"info","ts":"2022-07-21T14:19:41.336+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-21T14:19:41.337+0700","msg":"server start"}
+{"level":"error","ts":"2022-07-21T23:44:12.739+0700","msg":"Get \"https://www.mangaread.org/manga/please-stop-summoning-me/\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-21T23:44:12.739+0700","msg":"context deadline exceeded (Client.Timeout or context cancellation while reading body)"}
+{"level":"error","ts":"2022-07-21T23:44:30.481+0700","msg":"context deadline exceeded (Client.Timeout or context cancellation while reading body)"}
+{"level":"error","ts":"2022-07-21T23:44:30.481+0700","msg":"context deadline exceeded (Client.Timeout or context cancellation while reading body)"}
+{"level":"error","ts":"2022-07-21T23:44:35.093+0700","msg":"Get \"https://www.mangaread.org/manga/please-stop-summoning-me/\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-22T20:24:18.367+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:24:18.640+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:29:10.302+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:29:10.505+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:30:29.749+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:30:29.752+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:30:58.859+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:30:58.862+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:31:29.255+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:31:29.255+0700","msg":"bad request"}
+{"level":"info","ts":"2022-07-22T20:31:53.940+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-22T20:31:53.940+0700","msg":"server start"}
+{"level":"error","ts":"2022-07-22T20:32:27.425+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:32:27.425+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:45:31.477+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:45:32.625+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:45:48.233+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:46:32.135+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:46:32.385+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:46:53.920+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:47:52.176+0700","msg":"Get \"https://www.mangaread.org/manga/devilchi\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-22T20:48:27.997+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T20:48:28.322+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-22T21:09:35.906+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-22T21:10:02.492+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-22T22:01:33.567+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-22T22:57:06.012+0700","msg":"Get \"https://www.maid.my.id/page/1/\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-22T22:57:53.732+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-22T22:58:15.379+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-22T23:22:25.643+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T05:46:44.049+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T06:37:46.031+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T06:37:46.530+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T06:38:02.039+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T06:38:02.111+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T08:54:14.784+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=2\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:54:17.555+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=3\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:54:17.953+0700","msg":"Get \"https://www.mangatown.com/manga/secret_class\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:54:20.168+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=4\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:54:22.683+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=5\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:54:25.255+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=6\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:54:28.957+0700","msg":"Get \"https://www.mangatown.com/manga/secret_class\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:54:34.790+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=7\": dial tcp: lookup www.mangaread.org: no such host"}
+{"level":"error","ts":"2022-07-23T08:54:54.134+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:55:22.051+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=2\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:57:50.602+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:58:09.412+0700","msg":"Get \"https://www.maid.my.id/page/1/\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:58:42.195+0700","msg":"Get \"https://www.maid.my.id/page/1/\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:58:46.408+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T08:58:51.869+0700","msg":"Get \"https://www.mangatown.com/manga/secret_class\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T09:05:58.959+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T09:23:24.912+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T09:23:31.753+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T09:25:54.129+0700","msg":"Get \"https://www.mangaread.org/manga/level-999-demon-lord-and-a-level-1-slime/chapter-5\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T09:25:54.131+0700","msg":"Get \"https://www.mangaread.org/manga/level-999-demon-lord-and-a-level-1-slime\": dial tcp [2606:4700:3035::6815:5d3f]:443: i/o timeout (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T09:26:04.141+0700","msg":"Get \"https://www.mangaread.org/manga/level-999-demon-lord-and-a-level-1-slime\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T09:26:04.218+0700","msg":"Get \"https://www.mangaread.org/manga/level-999-demon-lord-and-a-level-1-slime\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T09:26:14.812+0700","msg":"Get \"https://www.mangaread.org/manga/level-999-demon-lord-and-a-level-1-slime\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T09:26:20.457+0700","msg":"Get \"https://www.mangaread.org/manga/level-999-demon-lord-and-a-level-1-slime\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T10:40:50.636+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T10:42:16.944+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"info","ts":"2022-07-23T10:51:30.292+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-23T10:51:30.292+0700","msg":"server start"}
+{"level":"error","ts":"2022-07-23T13:18:59.628+0700","msg":"context deadline exceeded (Client.Timeout or context cancellation while reading body)"}
+{"level":"error","ts":"2022-07-23T13:20:36.238+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=3\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T13:20:54.728+0700","msg":"Get \"https://www.mangatown.com/hot/3.htm?wviews.za\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T13:22:55.708+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"error","ts":"2022-07-23T13:40:23.873+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T13:44:09.134+0700","msg":"context deadline exceeded (Client.Timeout or context cancellation while reading body)"}
+{"level":"error","ts":"2022-07-23T13:44:09.134+0700","msg":"context deadline exceeded (Client.Timeout or context cancellation while reading body)"}
+{"level":"error","ts":"2022-07-23T14:08:05.438+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T14:08:53.570+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T14:09:32.285+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T14:09:39.096+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T14:10:10.200+0700","msg":"bad request"}
+{"level":"error","ts":"2022-07-23T14:39:00.125+0700","msg":"Get \"https://www.mangaread.org/manga/?m_orderby=new-manga&page=1\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"level":"info","ts":"2022-07-23T18:17:19.200+0700","msg":"env ready"}
+{"level":"info","ts":"2022-07-23T18:17:19.201+0700","msg":"server start"}

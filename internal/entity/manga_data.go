@@ -1,4 +1,4 @@
-package models
+package entity
 
 type MangaData struct {
 	Id          string    `json:"Id"`
@@ -24,4 +24,19 @@ type Image struct {
 type ReturnData struct {
 	Data  MangaData
 	Datas []MangaData
+}
+
+type MangaParams struct {
+	Source     string
+	PageNumber string
+	MangaId    string
+	ChapterId  string
+	Search     string
+	ImageProxy string
+	Path       string
+}
+
+type MangaSource struct {
+	Name string `json:"name"`
+	Id   int    `json:"id"`
 }

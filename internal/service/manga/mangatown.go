@@ -1,8 +1,9 @@
-package source_2
+package mangaservice
 
 import (
 	"fmt"
-	"mangamee-api/internal/models"
+	"mangamee-api/internal/entity"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -41,11 +42,9 @@ func GetRawImageData(s string) (string, string, int) {
 
 }
 
-//
+func MangatownIndex(params entity.MangaParams) ([]entity.MangaData, error) {
 
-func MangaIndex(queryParams models.QueryParams) ([]models.MangaData, error) {
-
-	var dataMangas []models.MangaData
+	var returnData []entity.MangaData
 
 	c := colly.NewCollector()
 	c.OnHTML("body > section > article > div > div.manga_pic_content > ul.manga_pic_list > li", func(e *colly.HTMLElement) {
@@ -59,7 +58,7 @@ func MangaIndex(queryParams models.QueryParams) ([]models.MangaData, error) {
 
 		mangaCoverCheck := strings.Replace(e.ChildAttr("a > img", "src"), "https://fmcdn.mangahere.com/", "http://fmcdn.mangatown.com/", -1)
 
-		dataMangas = append(dataMangas, models.MangaData{
+		returnData = append(returnData, entity.MangaData{
 			Id:          mangaId,
 			Title:       e.ChildAttr("a", "title"),
 			Cover:       mangaCoverCheck,
@@ -67,25 +66,26 @@ func MangaIndex(queryParams models.QueryParams) ([]models.MangaData, error) {
 		})
 
 	})
-	err := c.Visit("https://www.mangatown.com/hot/" + queryParams.Page + ".htm?wviews.za")
+	err := c.Visit("https://www.mangatown.com/hot/" + params.PageNumber + ".htm?wviews.za")
+
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
 
-	return dataMangas, nil
+	return returnData, nil
 
 }
 
-func MangaSearch(queryParams models.QueryParams) ([]models.MangaData, error) {
+func MangatownSearch(params entity.MangaParams) ([]entity.MangaData, error) {
 
-	var dataMangas []models.MangaData
+	var returnData []entity.MangaData
 
 	c := colly.NewCollector()
 	c.OnHTML(".manga_pic_list > li", func(e *colly.HTMLElement) {
 
 		mangaCoverCheck := strings.Replace(e.ChildAttr("a.manga_cover > img", "src"), "https://fmcdn.mangahere.com/", "http://fmcdn.mangatown.com/", -1)
 
-		dataMangas = append(dataMangas, models.MangaData{
+		returnData = append(returnData, entity.MangaData{
 			Cover: mangaCoverCheck,
 			Title: e.ChildAttr("a.manga_cover", "title"),
 			Id:    strings.Split(e.ChildAttr("a.manga_cover", "href"), "/")[2],
@@ -93,18 +93,18 @@ func MangaSearch(queryParams models.QueryParams) ([]models.MangaData, error) {
 
 	})
 
-	err := c.Visit("https://www.mangatown.com/search?name=" + queryParams.Search)
+	err := c.Visit("https://www.mangatown.com/search?name=" + params.Search)
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
 
-	return dataMangas, nil
+	return returnData, nil
 }
 
-func MangaDetail(queryParams models.QueryParams) (models.MangaData, error) {
+func MangatownDetail(params entity.MangaParams) (entity.MangaData, error) {
 
-	var dataMangas models.MangaData
-	var chapters []models.Chapter
+	var returnData entity.MangaData
+	var chapters []entity.Chapter
 
 	c := colly.NewCollector()
 
@@ -112,35 +112,38 @@ func MangaDetail(queryParams models.QueryParams) (models.MangaData, error) {
 
 		mangaCoverCheck := strings.Replace(e.ChildAttr("div.detail_info.clearfix > img", "src"), "https://fmcdn.mangahere.com/", "http://fmcdn.mangatown.com/", -1)
 
-		dataMangas.Title = e.ChildText("h1.title-top")
-		dataMangas.Cover = mangaCoverCheck
-		dataMangas.Summary = e.ChildText("div.detail_info.clearfix > ul > li > span")
+		returnData.Title = e.ChildText("h1.title-top")
+		returnData.Cover = mangaCoverCheck
+		returnData.Summary = e.ChildText("div.detail_info.clearfix > ul > li > span")
 
 	})
 
 	c.OnHTML(".chapter_list > li", func(e *colly.HTMLElement) {
 
-		chapters = append(chapters, models.Chapter{
+		re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
+		tempName := strings.ReplaceAll(re.FindAllString(e.ChildText("a"), -1)[0], "-", "")
+
+		chapters = append(chapters, entity.Chapter{
 			Id:   strings.Split(e.ChildAttr("a", "href"), "/")[3],
-			Name: strings.Split(e.ChildAttr("a", "href"), "/")[3],
+			Name: tempName,
 		})
 	})
 
-	err := c.Visit("https://www.mangatown.com/manga/" + queryParams.Id)
+	err := c.Visit("https://www.mangatown.com/manga/" + params.MangaId)
 
-	dataMangas.Chapters = chapters
+	returnData.Chapters = chapters
 
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
 
-	return dataMangas, nil
+	return returnData, nil
 }
 
-func MangaImage(queryParams models.QueryParams) (models.MangaData, error) {
+func MangatownImage(params entity.MangaParams) (entity.MangaData, error) {
 
-	var dataMangas models.MangaData
-	var dataImages []models.Image
+	var returnData entity.MangaData
+	var dataImages []entity.Image
 	var link string
 
 	c := colly.NewCollector()
@@ -153,7 +156,7 @@ func MangaImage(queryParams models.QueryParams) (models.MangaData, error) {
 
 	})
 
-	err := c.Visit("https://www.mangatown.com/manga/" + queryParams.Id + "/" + queryParams.ChapterId + "/")
+	err := c.Visit("https://www.mangatown.com/manga/" + params.MangaId + "/" + params.ChapterId + "/")
 
 	baseLink, imageLink := ReturnLastSliceAndJoinLink(link)
 	imageExtension, frontRawData, loopData := GetRawImageData(imageLink)
@@ -163,73 +166,74 @@ func MangaImage(queryParams models.QueryParams) (models.MangaData, error) {
 		if tempNumber < 10 {
 			a := fmt.Sprintf("%v00%v.%v", frontRawData, strconv.Itoa(tempNumber), imageExtension)
 			joinImageLink := fmt.Sprintf("%v/%v", baseLink, a)
-			dataImages = append(dataImages, models.Image{
+			dataImages = append(dataImages, entity.Image{
 				Image: joinImageLink,
 			})
 
 		} else if tempNumber < 100 && tempNumber > 9 {
 			a := fmt.Sprintf("%v0%v.%v", frontRawData, strconv.Itoa(tempNumber), imageExtension)
 			joinImageLink := fmt.Sprintf("%v/%v", baseLink, a)
-			dataImages = append(dataImages, models.Image{
+			dataImages = append(dataImages, entity.Image{
 				Image: joinImageLink,
 			})
 
 		} else if tempNumber < 1000 && tempNumber > 99 {
 			a := fmt.Sprintf("%v%v.%v", frontRawData, strconv.Itoa(tempNumber), imageExtension)
 			joinImageLink := fmt.Sprintf("%v/%v", baseLink, a)
-			dataImages = append(dataImages, models.Image{
+			dataImages = append(dataImages, entity.Image{
 				Image: joinImageLink,
 			})
 
 		} else if tempNumber < 10000 && tempNumber > 999 {
 			a := fmt.Sprintf("%v%v.%v", frontRawData, strconv.Itoa(tempNumber), imageExtension)
 			joinImageLink := fmt.Sprintf("%v/%v", baseLink, a)
-			dataImages = append(dataImages, models.Image{
+			dataImages = append(dataImages, entity.Image{
 				Image: joinImageLink,
 			})
 
 		}
 	}
 
-	dataMangas.Images = dataImages
+	returnData.Images = dataImages
 
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
-	return dataMangas, nil
-
+	return returnData, nil
 }
 
-func MangaChapter(queryParams models.QueryParams) (models.MangaData, error) {
+func MangatownChapter(params entity.MangaParams) (entity.MangaData, error) {
 
-	var dataMangas models.MangaData
-	var chapters []models.Chapter
+	var returnData entity.MangaData
+	var chapters []entity.Chapter
 
 	c := colly.NewCollector()
 
 	c.OnHTML(".chapter_list > li", func(e *colly.HTMLElement) {
 
-		chapters = append(chapters, models.Chapter{
+		re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
+		tempName := strings.ReplaceAll(re.FindAllString(e.ChildText("a"), -1)[0], "-", "")
+
+		chapters = append(chapters, entity.Chapter{
 			Id:   strings.Split(e.ChildAttr("a", "href"), "/")[3],
-			Name: strings.Split(e.ChildAttr("a", "href"), "/")[3],
+			Name: tempName,
 		})
 	})
 
-	err := c.Visit("https://www.mangatown.com/manga/" + queryParams.Id)
+	err := c.Visit("https://www.mangatown.com/manga/" + params.MangaId)
 
-	dataMangas.Chapters = chapters
+	returnData.Chapters = chapters
 
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
 
-	return dataMangas, nil
-
+	return returnData, nil
 }
 
-func MangaMetaTag(queryParams models.QueryParams) (models.MangaData, error) {
+func MangatownMetaTag(params entity.MangaParams) (entity.MangaData, error) {
 
-	var dataMangas models.MangaData
+	var returnData entity.MangaData
 
 	c := colly.NewCollector()
 
@@ -237,16 +241,16 @@ func MangaMetaTag(queryParams models.QueryParams) (models.MangaData, error) {
 
 		mangaCoverCheck := strings.Replace(e.ChildAttr("div.detail_info.clearfix > img", "src"), "https://fmcdn.mangahere.com/", "http://fmcdn.mangatown.com/", -1)
 
-		dataMangas.Title = e.ChildText("h1.title-top")
-		dataMangas.Cover = mangaCoverCheck
+		returnData.Title = e.ChildText("h1.title-top")
+		returnData.Cover = mangaCoverCheck
 
 	})
 
-	err := c.Visit("https://www.mangatown.com/manga/" + queryParams.Id)
+	err := c.Visit("https://www.mangatown.com/manga/" + params.MangaId)
 
 	if err != nil {
-		return dataMangas, err
+		return returnData, err
 	}
 
-	return dataMangas, nil
+	return returnData, nil
 }

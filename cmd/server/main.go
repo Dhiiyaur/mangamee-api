@@ -1,15 +1,7 @@
 package main
 
-import (
-	"mangamee-api/internal/app"
-	"mangamee-api/internal/config"
-)
-
-func init() {
-	config.InitEnvConfiguration()
-}
+import "mangamee-api/internal/app"
 
 func main() {
-
-	app.Start()
+	app.Run()
 }
