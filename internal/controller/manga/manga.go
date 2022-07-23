@@ -20,6 +20,10 @@ func New(e *echo.Echo, s *mangaservice.Service) {
 		MangaService: s,
 	}
 
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Welcome To MangameeApi")
+	})
+
 	m := e.Group("/manga")
 	m.GET("/index/:source/:page", handler.GetIndex)
 	m.GET("/search/:source", handler.GetSearch)
