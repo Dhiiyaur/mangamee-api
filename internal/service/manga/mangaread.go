@@ -16,13 +16,12 @@ func MangareadIndex(params entity.MangaParams) ([]entity.MangaData, error) {
 	c.OnHTML(".page-item-detail.manga", func(e *colly.HTMLElement) {
 
 		var coverImage string
-		checkImage := strings.Split(e.ChildAttr("a > img", "data-srcset"), " ")
+		checkImage := strings.Split(e.ChildAttr("a > img", "data-src"), " ")
 		if len(checkImage) < 2 {
 			coverImage = e.ChildAttr("a > img", "data-src")
 		} else {
 			coverImage = checkImage[len(checkImage)-2]
 		}
-
 		returnData = append(returnData, entity.MangaData{
 
 			Cover:       coverImage,
