@@ -120,12 +120,19 @@ func MangatownDetail(params entity.MangaParams) (entity.MangaData, error) {
 
 	c.OnHTML(".chapter_list > li", func(e *colly.HTMLElement) {
 
+		var chapterName string
+
 		re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
-		tempName := strings.ReplaceAll(re.FindAllString(e.ChildText("a"), -1)[0], "-", "")
+		arr := re.FindAllString(e.ChildText("a"), -1)
+		if len(arr) != 0 {
+			chapterName = strings.ReplaceAll(arr[0], "-", "")
+		} else {
+			chapterName = "0"
+		}
 
 		chapters = append(chapters, entity.Chapter{
 			Id:   strings.Split(e.ChildAttr("a", "href"), "/")[3],
-			Name: tempName,
+			Name: chapterName,
 		})
 	})
 
@@ -211,12 +218,19 @@ func MangatownChapter(params entity.MangaParams) (entity.MangaData, error) {
 
 	c.OnHTML(".chapter_list > li", func(e *colly.HTMLElement) {
 
+		var chapterName string
+
 		re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
-		tempName := strings.ReplaceAll(re.FindAllString(e.ChildText("a"), -1)[0], "-", "")
+		arr := re.FindAllString(e.ChildText("a"), -1)
+		if len(arr) != 0 {
+			chapterName = strings.ReplaceAll(arr[0], "-", "")
+		} else {
+			chapterName = "0"
+		}
 
 		chapters = append(chapters, entity.Chapter{
 			Id:   strings.Split(e.ChildAttr("a", "href"), "/")[3],
-			Name: tempName,
+			Name: chapterName,
 		})
 	})
 
