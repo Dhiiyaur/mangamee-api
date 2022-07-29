@@ -15,24 +15,18 @@ type MangaHandler struct {
 	MangaService *mangaservice.Service
 }
 
-func New(e *echo.Echo, s *mangaservice.Service) {
+func New(e *echo.Group, s *mangaservice.Service) {
 	handler := &MangaHandler{
 		MangaService: s,
 	}
 
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Welcome To MangameeApi")
-	})
-
-	m := e.Group("/manga")
-	m.GET("/index/:source/:page", handler.GetIndex)
-	m.GET("/search/:source", handler.GetSearch)
-	m.GET("/detail/:source/:id", handler.GetDetail)
-	m.GET("/read/:source/:id/:chapter_id", handler.GetImage)
-	m.GET("/chapter/:source/:id", handler.GetChapter)
-	m.GET("/source", handler.GetSource)
-	m.GET("/meta/:source/:id", handler.GetMetaTag)
-
+	e.GET("/index/:source/:page", handler.GetIndex)
+	e.GET("/search/:source", handler.GetSearch)
+	e.GET("/detail/:source/:id", handler.GetDetail)
+	e.GET("/read/:source/:id/:chapter_id", handler.GetImage)
+	e.GET("/chapter/:source/:id", handler.GetChapter)
+	e.GET("/source", handler.GetSource)
+	e.GET("/meta/:source/:id", handler.GetMetaTag)
 }
 
 func (h *MangaHandler) GetIndex(c echo.Context) error {
