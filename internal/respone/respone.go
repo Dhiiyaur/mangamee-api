@@ -20,7 +20,6 @@ type (
 )
 
 func JsonSuccess(c echo.Context, code int, data interface{}) error {
-
 	return c.JSON(http.StatusOK, SuccessResponse{
 		Code:    code,
 		Message: "success",

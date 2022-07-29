@@ -89,13 +89,6 @@ func (repo *Repository) InsertCache(params entity.MangaParams, mangaData interfa
 		return errors.New("error set cache")
 	}
 	return nil
-
-	// if params.Path == "index" || params.Path == "search" {
-	// 	val, _ = json.Marshal(mangaData.Datas)
-	// } else if params.Path == "detail" || params.Path == "read" || params.Path == "chapter" {
-	// 	val, _ = json.Marshal(mangaData.Data)
-	// }
-
 }
 
 func (repo *Repository) GetCache(params entity.MangaParams) (interface{}, error) {
@@ -131,4 +124,30 @@ func (repo *Repository) GetCache(params entity.MangaParams) (interface{}, error)
 	}
 
 	return nil, errors.New("bad request")
+}
+
+func (repo *Repository) InsertLink(key string, longUrl string) error {
+
+	expired := time.Duration(config.Cfg.Redis.Expired) * time.Hour
+	err := repo.redis.Set(ctx, key, longUrl, expired).Err()
+
+	if err != nil {
+		return errors.New("error set cache")
+	}
+	return nil
+}
+
+func (repo *Repository) GetLink(key string) (interface{}, error) {
+
+	val, err := repo.redis.Get(ctx, key).Result()
+
+	switch {
+	case err == redis.Nil:
+		return nil, errors.New("key does not exist")
+	case err != nil:
+		return nil, errors.New("get failed")
+	case val == "":
+		return nil, errors.New("value is empty")
+	}
+	return val, nil
 }
