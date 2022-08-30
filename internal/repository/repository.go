@@ -151,3 +151,37 @@ func (repo *Repository) GetLink(key string) (interface{}, error) {
 	}
 	return val, nil
 }
+
+func (repo *Repository) InsertBookmark(key string, bookmark interface{}) error {
+
+	expired := time.Duration(config.Cfg.Redis.Expired) * time.Hour
+	val, _ := json.Marshal(bookmark)
+	err := repo.redis.Set(ctx, key, val, expired).Err()
+
+	if err != nil {
+		return errors.New("error set cache")
+	}
+	return nil
+}
+
+func (repo *Repository) GetBookmark(key string) (interface{}, error) {
+
+	var bookmarkData interface{}
+
+	val, err := repo.redis.Get(ctx, key).Result()
+
+	switch {
+	case err == redis.Nil:
+		return nil, errors.New("key does not exist")
+	case err != nil:
+		return nil, errors.New("get failed")
+	case val == "":
+		return nil, errors.New("value is empty")
+	}
+
+	err = json.Unmarshal([]byte(val), &bookmarkData)
+	if err != nil {
+		return nil, errors.New("cannot unmarshall data")
+	}
+	return bookmarkData, nil
+}
