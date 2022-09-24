@@ -134,7 +134,11 @@ func MangareadImage(params entity.MangaParams) (entity.MangaData, error) {
 	})
 	err := c.Visit("https://www.mangaread.org/manga/" + params.MangaId + "/" + params.ChapterId)
 
-	returnData.Images = dataImages
+	re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
+	returnData.Images = entity.DataChapters{
+		ChapterName: re.FindAllString(params.ChapterId, -1)[0],
+		Images:      dataImages,
+	}
 
 	if err != nil {
 		return returnData, err

@@ -36,7 +36,7 @@ func (h *BookmarkHandler) GetCode(c echo.Context) error {
 		return respone.JsonError(c, http.StatusBadRequest, err.Error())
 	}
 
-	return respone.JsonSuccess(c, http.StatusOK, r)
+	return respone.JsonSuccess(c, http.StatusCreated, r)
 }
 
 func (h *BookmarkHandler) GetBookmark(c echo.Context) error {

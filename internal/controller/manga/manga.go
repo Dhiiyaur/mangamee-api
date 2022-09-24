@@ -27,6 +27,7 @@ func New(e *echo.Group, s *mangaservice.Service) {
 	e.GET("/chapter/:source/:id", handler.GetChapter)
 	e.GET("/source", handler.GetSource)
 	e.GET("/meta/:source/:id", handler.GetMetaTag)
+	e.GET("/proxy", handler.GetMangaProxy)
 }
 
 func (h *MangaHandler) GetIndex(c echo.Context) error {
@@ -148,4 +149,26 @@ func (h *MangaHandler) GetSource(c echo.Context) error {
 	}
 
 	return respone.JsonSuccess(c, http.StatusOK, MangaSource)
+}
+
+func (h *MangaHandler) GetMangaProxy(c echo.Context) error {
+	params := entity.MangaParams{
+		ImageProxy: c.QueryParam("id"),
+	}
+	req, err := http.NewRequest("GET", params.ImageProxy, nil)
+	if err != nil {
+		config.Logger.Error(err)
+		respone.JsonError(c, http.StatusBadRequest, err.Error())
+	}
+
+	req.Header.Set("Referer", "https://m.mangabat.com/")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36")
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		config.Logger.Error(err)
+		respone.JsonError(c, http.StatusBadRequest, err.Error())
+	}
+
+	return c.Stream(http.StatusOK, "image", resp.Body)
 }
