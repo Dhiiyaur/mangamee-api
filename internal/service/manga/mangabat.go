@@ -3,6 +3,7 @@ package mangaservice
 import (
 	"fmt"
 	"mangamee-api/internal/entity"
+	"regexp"
 	"strings"
 
 	"github.com/gocolly/colly"
@@ -109,14 +110,18 @@ func MangabatImage(params entity.MangaParams) (entity.MangaData, error) {
 	c.OnHTML(".img-content", func(e *colly.HTMLElement) {
 
 		dataImages = append(dataImages, entity.Image{
-			Image: fmt.Sprintf("%vproxy/4?id=%v", "https://mangamee-api.herokuapp.com/manga/", e.Attr("src")),
+			Image: fmt.Sprintf("%vproxy?id=%v", "https://api.mangamee.space/manga/", e.Attr("src")),
 		})
 
 	})
 
 	err := c.Visit("https://readmangabat.com/" + params.ChapterId + "/")
 
-	returnData.Images = dataImages
+	re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
+	returnData.Images = entity.DataChapters{
+		ChapterName: re.FindAllString(params.ChapterId, -1)[0],
+		Images:      dataImages,
+	}
 
 	if err != nil {
 		return returnData, err

@@ -79,7 +79,7 @@ func (repo *Repository) InsertStatistic(params entity.MangaParams) error {
 
 func (repo *Repository) InsertCache(params entity.MangaParams, mangaData interface{}) error {
 
-	expired := time.Duration(config.Cfg.Redis.Expired) * time.Hour
+	expired := time.Duration(config.Cfg.Redis.Expired) * time.Second
 	key := createRedisKey(params)
 
 	val, _ := json.Marshal(mangaData)
@@ -128,7 +128,7 @@ func (repo *Repository) GetCache(params entity.MangaParams) (interface{}, error)
 
 func (repo *Repository) InsertLink(key string, longUrl string) error {
 
-	expired := time.Duration(config.Cfg.Redis.Expired) * time.Hour
+	expired := time.Duration(config.Cfg.Redis.Expired) * time.Second
 	err := repo.redis.Set(ctx, key, longUrl, expired).Err()
 
 	if err != nil {
@@ -154,7 +154,7 @@ func (repo *Repository) GetLink(key string) (interface{}, error) {
 
 func (repo *Repository) InsertBookmark(key string, bookmark interface{}) error {
 
-	expired := time.Duration(config.Cfg.Redis.Expired) * time.Hour
+	expired := time.Duration(config.Cfg.Redis.Expired) * time.Second
 	val, _ := json.Marshal(bookmark)
 	err := repo.redis.Set(ctx, key, val, expired).Err()
 

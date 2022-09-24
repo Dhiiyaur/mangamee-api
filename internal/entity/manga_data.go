@@ -1,24 +1,29 @@
 package entity
 
 type MangaData struct {
-	Id          string    `json:"Id"`
-	Cover       string    `json:"Cover"`
-	Title       string    `json:"Title"`
-	LastChapter string    `json:"LastChapter"`
-	LastRead    string    `json:"LastRead"`
-	Status      string    `json:"Status"`
-	Summary     string    `json:"Summary"`
-	Chapters    []Chapter `json:"Chapters"`
-	Images      []Image   `json:"Images"`
+	Id          string       `json:"id"`
+	Cover       string       `json:"cover"`
+	Title       string       `json:"title"`
+	LastChapter string       `json:"last_chapter"`
+	LastRead    string       `json:"last_read"`
+	Status      string       `json:"status"`
+	Summary     string       `json:"summary"`
+	Chapters    []Chapter    `json:"chapters"`
+	Images      DataChapters `json:"data_images"`
 }
 
 type Chapter struct {
-	Id   string `json:"Id"`
-	Name string `json:"Name"`
+	Id   string `json:"id"`
+	Name string `json:"name"`
+}
+
+type DataChapters struct {
+	ChapterName string  `json:"chapter_name"`
+	Images      []Image `json:"images"`
 }
 
 type Image struct {
-	Image string `json:"Image"`
+	Image string `json:"image"`
 }
 
 type ReturnData struct {
