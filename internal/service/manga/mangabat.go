@@ -105,6 +105,8 @@ func MangabatImage(params entity.MangaParams) (entity.MangaData, error) {
 
 	var returnData entity.MangaData
 	var dataImages []entity.Image
+	var name string
+
 	c := colly.NewCollector()
 
 	c.OnHTML(".img-content", func(e *colly.HTMLElement) {
@@ -118,8 +120,16 @@ func MangabatImage(params entity.MangaParams) (entity.MangaData, error) {
 	err := c.Visit("https://readmangabat.com/" + params.ChapterId + "/")
 
 	re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
+
+	if strings.Contains(params.ChapterId, "chap") {
+		tmp := strings.Split(params.ChapterId, "chap-")
+		name = re.FindAllString(tmp[len(tmp)-1], -1)[0]
+	} else {
+		name = re.FindAllString(params.ChapterId, -1)[0]
+	}
+
 	returnData.Images = entity.DataChapters{
-		ChapterName: re.FindAllString(params.ChapterId, -1)[0],
+		ChapterName: name,
 		Images:      dataImages,
 	}
 
