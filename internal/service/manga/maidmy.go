@@ -121,6 +121,7 @@ func MaidmyDetail(params entity.MangaParams) (entity.MangaData, error) {
 	err := c.Visit("https://www.maid.my.id/manga/" + params.MangaId + "/")
 
 	returnData.Chapters = chapters
+	returnData.OriginalServer = "https://www.maid.my.id/manga/" + params.MangaId + "/"
 
 	if err != nil {
 		return returnData, err
@@ -145,11 +146,12 @@ func MaidmyImage(params entity.MangaParams) (entity.MangaData, error) {
 
 	err := c.Visit("https://www.maid.my.id/" + params.ChapterId + "/")
 
-	re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
+	re := regexp.MustCompile(`\d+`)
 	returnData.Images = entity.DataChapters{
 		ChapterName: re.FindAllString(params.ChapterId, -1)[0],
 		Images:      dataImages,
 	}
+	returnData.OriginalServer = "https://www.maid.my.id/" + params.ChapterId + "/"
 
 	if err != nil {
 		return returnData, err

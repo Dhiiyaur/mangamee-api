@@ -99,7 +99,7 @@ func MangareadDetail(params entity.MangaParams) (entity.MangaData, error) {
 
 	c.OnHTML(".wp-manga-chapter", func(e *colly.HTMLElement) {
 
-		re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
+		re := regexp.MustCompile(`\d+`)
 		tempName := strings.ReplaceAll(re.FindAllString(e.ChildText("a"), -1)[0], "-", "")
 
 		chapters = append(chapters, entity.Chapter{
@@ -111,6 +111,7 @@ func MangareadDetail(params entity.MangaParams) (entity.MangaData, error) {
 	err := c.Visit("https://www.mangaread.org/manga/" + params.MangaId)
 
 	returnData.Chapters = chapters
+	returnData.OriginalServer = "https://www.mangaread.org/manga/" + params.MangaId
 
 	if err != nil {
 		return returnData, err
@@ -134,11 +135,13 @@ func MangareadImage(params entity.MangaParams) (entity.MangaData, error) {
 	})
 	err := c.Visit("https://www.mangaread.org/manga/" + params.MangaId + "/" + params.ChapterId)
 
-	re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
+	re := regexp.MustCompile(`\d+`)
 	returnData.Images = entity.DataChapters{
 		ChapterName: re.FindAllString(params.ChapterId, -1)[0],
 		Images:      dataImages,
 	}
+
+	returnData.OriginalServer = "https://www.mangaread.org/manga/" + params.MangaId + "/" + params.ChapterId
 
 	if err != nil {
 		return returnData, err
@@ -154,8 +157,8 @@ func MangareadChapter(params entity.MangaParams) (entity.MangaData, error) {
 
 	c.OnHTML(".wp-manga-chapter", func(e *colly.HTMLElement) {
 
-		re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
-		tempName := strings.ReplaceAll(re.FindAllString(e.ChildText("a"), -1)[0], "-", "")
+		re := regexp.MustCompile(`\d+`)
+		tempName := re.FindAllString(e.ChildText("a"), -1)[0]
 
 		chapters = append(chapters, entity.Chapter{
 			Name: tempName,
