@@ -93,6 +93,7 @@ func MangabatDetail(params entity.MangaParams) (entity.MangaData, error) {
 	err := c.Visit("https://readmangabat.com/" + params.MangaId + "/")
 
 	returnData.Chapters = chapters
+	returnData.OriginalServer = "https://readmangabat.com/" + params.MangaId + "/"
 
 	if err != nil {
 		return returnData, err
@@ -119,10 +120,9 @@ func MangabatImage(params entity.MangaParams) (entity.MangaData, error) {
 
 	err := c.Visit("https://readmangabat.com/" + params.ChapterId + "/")
 
-	re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
-
+	re := regexp.MustCompile(`\d+`)
 	if strings.Contains(params.ChapterId, "chap") {
-		tmp := strings.Split(params.ChapterId, "chap-")
+		tmp := strings.Split(params.ChapterId, "chap")
 		name = re.FindAllString(tmp[len(tmp)-1], -1)[0]
 	} else {
 		name = re.FindAllString(params.ChapterId, -1)[0]
@@ -132,6 +132,8 @@ func MangabatImage(params entity.MangaParams) (entity.MangaData, error) {
 		ChapterName: name,
 		Images:      dataImages,
 	}
+
+	returnData.OriginalServer = "https://readmangabat.com/" + params.ChapterId + "/"
 
 	if err != nil {
 		return returnData, err
