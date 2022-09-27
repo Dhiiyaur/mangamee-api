@@ -99,7 +99,7 @@ func MangareadDetail(params entity.MangaParams) (entity.MangaData, error) {
 
 	c.OnHTML(".wp-manga-chapter", func(e *colly.HTMLElement) {
 
-		re := regexp.MustCompile(`\d+`)
+		re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
 		tempName := strings.ReplaceAll(re.FindAllString(e.ChildText("a"), -1)[0], "-", "")
 
 		chapters = append(chapters, entity.Chapter{

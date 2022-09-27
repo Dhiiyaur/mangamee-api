@@ -122,10 +122,10 @@ func MangatownDetail(params entity.MangaParams) (entity.MangaData, error) {
 
 		var chapterName string
 
-		re := regexp.MustCompile(`\d+`)
+		re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
 		arr := re.FindAllString(e.ChildText("a"), -1)
 		if len(arr) != 0 {
-			chapterName = arr[0]
+			chapterName = arr[len(arr)-1]
 		} else {
 			chapterName = "0"
 		}
@@ -226,10 +226,10 @@ func MangatownChapter(params entity.MangaParams) (entity.MangaData, error) {
 
 		var chapterName string
 
-		re := regexp.MustCompile(`\d+`)
+		re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
 		arr := re.FindAllString(e.ChildText("a"), -1)
 		if len(arr) != 0 {
-			chapterName = arr[0]
+			chapterName = arr[len(arr)-1]
 		} else {
 			chapterName = "0"
 		}
