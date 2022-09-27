@@ -40,7 +40,7 @@ func (h *MangaHandler) GetIndex(c echo.Context) error {
 	r, err := h.MangaService.GetIndex(params)
 	if err != nil {
 		config.Logger.Error(err)
-		respone.JsonError(c, http.StatusBadRequest, err.Error())
+		return respone.JsonError(c, http.StatusBadRequest, err.Error())
 	}
 
 	return respone.JsonSuccess(c, http.StatusOK, r)
@@ -56,7 +56,7 @@ func (h *MangaHandler) GetSearch(c echo.Context) error {
 	r, err := h.MangaService.GetSearch(params)
 	if err != nil {
 		config.Logger.Error(err)
-		respone.JsonError(c, http.StatusBadRequest, err.Error())
+		return respone.JsonError(c, http.StatusBadRequest, err.Error())
 	}
 
 	return respone.JsonSuccess(c, http.StatusOK, r)
@@ -72,7 +72,7 @@ func (h *MangaHandler) GetDetail(c echo.Context) error {
 	r, err := h.MangaService.GetDetail(params)
 	if err != nil {
 		config.Logger.Error(err)
-		respone.JsonError(c, http.StatusBadRequest, err.Error())
+		return respone.JsonError(c, http.StatusBadRequest, err.Error())
 	}
 
 	return respone.JsonSuccess(c, http.StatusOK, r)
@@ -89,7 +89,7 @@ func (h *MangaHandler) GetImage(c echo.Context) error {
 	r, err := h.MangaService.GetImage(params)
 	if err != nil {
 		config.Logger.Error(err)
-		respone.JsonError(c, http.StatusBadRequest, err.Error())
+		return respone.JsonError(c, http.StatusBadRequest, err.Error())
 	}
 
 	return respone.JsonSuccess(c, http.StatusOK, r)
@@ -105,7 +105,7 @@ func (h *MangaHandler) GetChapter(c echo.Context) error {
 	r, err := h.MangaService.GetChapter(params)
 	if err != nil {
 		config.Logger.Error(err)
-		respone.JsonError(c, http.StatusBadRequest, err.Error())
+		return respone.JsonError(c, http.StatusBadRequest, err.Error())
 	}
 
 	return respone.JsonSuccess(c, http.StatusOK, r)
@@ -121,7 +121,7 @@ func (h *MangaHandler) GetMetaTag(c echo.Context) error {
 	r, err := h.MangaService.GetMeta(params)
 	if err != nil {
 		config.Logger.Error(err)
-		respone.JsonError(c, http.StatusBadRequest, err.Error())
+		return respone.JsonError(c, http.StatusBadRequest, err.Error())
 	}
 
 	return respone.JsonSuccess(c, http.StatusOK, r)
@@ -158,7 +158,7 @@ func (h *MangaHandler) GetMangaProxy(c echo.Context) error {
 	req, err := http.NewRequest("GET", params.ImageProxy, nil)
 	if err != nil {
 		config.Logger.Error(err)
-		respone.JsonError(c, http.StatusBadRequest, err.Error())
+		return respone.JsonError(c, http.StatusBadRequest, err.Error())
 	}
 
 	req.Header.Set("Referer", "https://m.mangabat.com/")
@@ -167,7 +167,7 @@ func (h *MangaHandler) GetMangaProxy(c echo.Context) error {
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		config.Logger.Error(err)
-		respone.JsonError(c, http.StatusBadRequest, err.Error())
+		return respone.JsonError(c, http.StatusBadRequest, err.Error())
 	}
 
 	return c.Stream(http.StatusOK, "image", resp.Body)

@@ -146,7 +146,7 @@ func MaidmyImage(params entity.MangaParams) (entity.MangaData, error) {
 
 	err := c.Visit("https://www.maid.my.id/" + params.ChapterId + "/")
 
-	re := regexp.MustCompile(`\d+`)
+	re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
 	returnData.Images = entity.DataChapters{
 		ChapterName: re.FindAllString(params.ChapterId, -1)[0],
 		Images:      dataImages,
