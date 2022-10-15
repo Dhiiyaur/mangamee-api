@@ -10,6 +10,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/itchyny/base58-go v0.2.0
 	github.com/labstack/echo/v4 v4.9.1
+	github.com/lib/pq v1.10.7
 	github.com/spf13/viper v1.13.0
 	go.uber.org/zap v1.23.0
 	golang.org/x/net v0.0.0-20221014081412-f15817d10f9b

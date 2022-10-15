@@ -5,6 +5,7 @@ import (
 	"mangamee-api/src/config"
 
 	"github.com/go-redis/redis/v8"
+	_ "github.com/lib/pq"
 )
 
 func CreateDbConnection(cfg config.Config) (*sql.DB, error) {
