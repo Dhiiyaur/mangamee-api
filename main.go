@@ -1,6 +1,6 @@
 package main
 
-import "mangamee-api/src/app"
+import "mangamee-api/app"
 
 func main() {
 	app.Run()
