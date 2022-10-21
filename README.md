@@ -29,14 +29,14 @@ Setup Environment (.env)
   see .env.example
 ```
 
-Start the server
+Start the dev server
 
 ```bash
   make run
 
   or
   
-  go run cmd/server/main.go
+  go run main.go
 ```
 
 ## Usage
